@@ -1,8 +1,6 @@
 <?php
 /**
- * User: zhangxiaoman.
- *
- * @author 章小慢<manyangz@jumei.com>
+ * @author 章小慢
  * @date 2017/11/20 11:09
  */
 require "vendor/autoload.php";
