@@ -17,7 +17,7 @@ if (ctype_digit($str)) {
     $workResult = $workflow->result();
     if (strlen($str) != 10)
     {
-        $workResult->title("Params error...")->subtitle("{$str} is not unix timestamp\"");
+        $workResult->title("Params error...")->subtitle("{$str} is not unix timestamp");
     } else {
         $result = date("Y-m-d H:i:s",$str);
         $workResult->title('Y-m-d H:i:s')->subtitle($result)->arg($result)->autocomplete($result);
