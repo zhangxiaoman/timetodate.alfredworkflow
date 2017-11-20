@@ -12,32 +12,38 @@ $workflow = new Workflow;
 unset($argv[0]);
 $str = implode(" ", $argv);
 
-if(strval(strtotime(date('Y-m-d H:i:s',$str))) == $str) {
-    $result = date("Y-m-d H:i:s",$str);
-    $workflow->result()
-        ->uid('1')
-        ->title('Y-m-d H:i:s')
-        ->subtitle($result)
+// timestamp
+if (ctype_digit($str)) {
+    $workResult = $workflow->result();
+    if (strlen($str) != 10)
+    {
+        $workResult->title("Params error...")->subtitle("{$str} is not unix timestamp\"");
+    } else {
+        $result = date("Y-m-d H:i:s",$str);
+        $workResult->title('Y-m-d H:i:s')->subtitle($result)->arg($result)->autocomplete($result);
+    }
+    $workResult->uid('1')
         ->type('default')
-        ->arg($result)
         ->valid(true)
-        ->icon('icon.png')
-        ->autocomplete($result);
-} else {
-    $result = strtotime($str);
-    $workflow->result()
-        ->uid('2')
-        ->title('timestamp')
-        ->subtitle($result)
-        ->type('default')
-        ->arg($result)
-        ->valid(true)
-        ->icon('icon.png')
-        ->autocomplete($str);
+        ->icon('icon.png');
+    die($workflow->output());
 }
 
-echo $workflow->output();
+$result = strtotime($str);
 
+$workflowResult = $workflow->result();
+$workflowResult->uid('2')->title('date');
+if (empty($result)) {
+    $workflowResult->subtitle("{$str} is not unix date");
+    die($workflow->output());
+}
+$workflowResult->type('default')
+    ->subtitle($result)
+    ->arg($result)
+    ->valid(true)
+    ->icon('icon.png')
+    ->autocomplete($str);
+die($workflow->output());
 ?>
 
 
